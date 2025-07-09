@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esnad | Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="icon" href="/img/idk.jfif">
+    <title>Esnad - Read Books Online for Free</title>
+    <meta name="description" content="Esnad lets you explore and read your favorite books online for free. Enjoy Fiction, History, Technology and more!">
+    <meta name="keywords" content="books online, free PDF books, fiction, technology books, read online">
+    <meta name="author" content="Esnad Team">
+
+    <meta property="og:title" content="Esnad - Read Books Online for Free">
+    <meta property="og:description" content="Explore your favorite books and PDFs online. Join Esnad today!">
+
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo"><img style="border-radius: 50%;" width="60px" src="/img/idk.jfif"></div>
+                <div class="brand-text">
+                    <div class="brand-name">Esnad</div>
+                    <div class="brand-subtitle">No Risk No Story!</div>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a style="color: #902f36 !important;" href="/index" class="nav-item">Home</a>
+                <a href="/profile" class="nav-item">Profile</a>
+                <a href="#" class="nav-item">Contact</a>
+                <a href="/logout" class="nav-item">Logout</a>
+            </nav>
+            <div class="user-profile">
+                <!-- <div class="user-avatar"></div> -->
+                <a href="/profile" style="text-decoration: none; color: #111;"><%= userName %></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="search-hero">
+            <h1 class="search-title">Enterprise Library Catalog</h1>
+            <p class="search-subtitle">Search through our comprehensive collection of books, journals, and digital resources</p>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search by title or author..." />
+                    <div class="search-filters">
+                        <select id="categorySelect">
+                            <option value="all">All Categories</option>
+                            <option value="fiction">Fiction</option>
+                            <option value="science fiction">Science Fiction</option>
+                            <option value="mystery">Mystery</option>
+                            <option value="romance">Romance</option>
+                            <option value="fantasy">Fantasy</option>
+                            <option value="history">History</option>
+                            <option value="biography">Biography</option>
+                            <option value="self help">Self Help</option>
+                            <option value="technology">Technology</option>
+                            <option value="travel">Travel</option>
+                            <option value="health">Health</option>
+                            <option value="business">Business</option>
+                        </select>
+                        <!-- <select class="filter-select" id="statusFilter">
+                            <option value="available">Available</option>
+                            <option value="borrowed">Borrowed</option>
+                            <option value="reserved">Reserved</option>
+                        </select> -->
+                    </div>
+                    <button class="search-button" id="searchButton">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Library Collection</h2>
+                <p class="section-subtitle">Browse and manage your enterprise library resources</p>
+            </div>
+
+            <div class="books-grid" id="booksGrid">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading books...</p>
+                </div>
+            </div>
+
+            <div class="library-info">
+                <div class="library-motto">
+                    "Knowledge is the treasure of a wise man" - Preserving wisdom for future generations
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer">
+        <div class="content">
+          <div class="top">
+            <div class="logo-details">
+              <span class="logo_name">Esnad</span>
+            </div>
+            <div class="media-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://x.com/EsnadLib"><i class="fab fa-x"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.youtube.com/@esnadlib"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="link-boxes">
+            <ul class="box">
+                <img id="imggg" style="border-radius: 20px;" width="200px" src="/img/idk.jfif" alt="">
+            </ul>
+            <ul class="box">
+              <li class="link_name">Pages</li>
+              <li><a href="/index">Home</a></li>
+              <li><a href="#footer">Contact</a></li>
+              <li><a href="/profile">Profile</a></li>
+              <li><a href="/logout">Logout</a></li>
+            </ul>
+            <ul class="box">
+              <li class="link_name">Contact</li>
+              <li><a href="https://wa.link/e3ezdq">WhatsApp</a></li>
+              <li><a href="">esnadlib@gmail.com</a></li>
+              <li><a href="#">Instgram</a></li>
+              <li><a href="#">FaceBook</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="bottom-details">
+          <div class="bottom_text">
+            <span class="copyright_text">Copyright © 2025 <a href="#">Esnad.</a>All rights reserved</span>
+            <span class="policy_terms">
+              <a href="#">Privacy policy</a>
+              <a href="#">Terms & condition</a>
+            </span>
+          </div>
+        </div>
+      </footer>
+
+    <script>
+let booksData = [];
+let filteredBooks = [];
+
+// Fetch books from API
+async function fetchBooksFromDatabase() {
+    try {
+        const response = await fetch('/api/books');
+        if (!response.ok) throw new Error('Network response was not ok');
+        booksData = await response.json();
+        filteredBooks = booksData;
+        renderBooks();
+    } catch (error) {
+        console.error('Failed to fetch books:', error);
+        document.getElementById('booksGrid').innerHTML = '<p>Error loading books.</p>';
+    }
+}
+
+// document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Render books grid
+function renderBooks() {
+    const booksGrid = document.getElementById('booksGrid');
+    
+    if (!filteredBooks.length) {
+        booksGrid.innerHTML = `
+            <div class="no-results">
+                <div class="no-results-icon">📚</div>
+                <div class="no-results-title">No books found</div>
+            </div>
+        `;
+        return;
+    }
+
+    booksGrid.innerHTML = '';
+
+
+
+    
+    filteredBooks.forEach(book => {
+        const bookCard = document.createElement('div');
+        bookCard.className = 'book-card';
+        bookCard.innerHTML = `
+  <div class="book-cover">
+    ${book.image ? 
+      `<img src="${book.image}" alt="${book.title}" class="book-image">` : 
+      `<div class="book-placeholder">
+        <i class="fas fa-book"></i>
+        <span>${book.title}</span>
+      </div>`
+    }
+  </div>
+  <div class="book-info">
+    <h3 class="book-title">${book.title}</h3>
+    <div class="book-author">${book.author || ''}</div>
+    <div class="book-meta">
+      <span class="book-category">${book.category}</span>
+    </div>
+    <form action="/books/view/${book._id}" method="POST" style="display: inline;">
+      <button onclick="window.open('${book.pdf}', '_blank')" type="submit" class="read-button">Read</button>
+    </form>
+  </div>
+`;
+
+        booksGrid.appendChild(bookCard);
+    });
+}
+
+function performSearch() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const selectedCategory = document.getElementById('categorySelect').value.toLowerCase();
+
+    filteredBooks = booksData.filter(book => {
+        const matchesSearch = !searchTerm || 
+            (book.title && book.title.toLowerCase().includes(searchTerm)) || 
+            (book.author && book.author.toLowerCase().includes(searchTerm));
+
+        const matchesCategory = selectedCategory === 'all' || 
+            (book.category && book.category.toLowerCase() === selectedCategory);
+
+        return matchesSearch && matchesCategory;
+    });
+
+    renderBooks();
+}
+
+// Add event listeners after DOM loaded
+document.addEventListener('DOMContentLoaded', () => {
+    fetchBooksFromDatabase();
+
+    document.getElementById('searchButton').addEventListener('click', performSearch);
+    document.getElementById('searchInput').addEventListener('input', performSearch);
+    document.getElementById('categorySelect').addEventListener('change', performSearch);
+
+    // Keep or remove this based on your use-case
+    document.querySelectorAll('input[name="topics"]').forEach(input => {
+        input.addEventListener('change', performSearch);
+    });
+});
+
+
+    </script>
+</body> 
+</html>

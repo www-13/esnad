@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="icon" href="/img/idk.jfif">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+  <h1>Admin Dashboard - Add New Book</h1>
+  <form action="/admin" method="POST">
+    <input type="text" name="title" placeholder="Book Title" required />
+    <input type="text" name="author" placeholder="Author" required />
+    <input type="text" name="category" placeholder="Category" required />
+    <input type="text" name="image" placeholder="Image URL (optional)" />
+    <input type="text" name="pdf" placeholder="Google Drive PDF Link" required />
+    <button type="submit">Add Book</button>
+  </form>
+
+  <h2>Books List</h2>
+<ul>
+  <% if (books && books.length > 0) { %>
+    <% books.forEach(book => { %>
+      <li>
+        <strong><%= book.title %></strong> by <%= book.author %> - <%= book.category %>
+        <form action="/admin/delete/<%= book._id %>" method="POST" style="display:inline;">
+          <button type="submit" onclick="return confirm('Delete this book?');">Delete</button>
+        </form>
+      </li>
+    <% }) %>
+  <% } else { %>
+    <li>No books available</li>
+  <% } %>
+</ul>
+
+
+<% if (message && typeof message === 'string') { %>
+  <p class="<%= message.includes('Error') ? 'error' : 'message' %>"><%= message %></p>
+<% } %>
+
+<script>
+  document.addEventListener('contextmenu', e => e.preventDefault());
+</script>
+</body>
+</html>
