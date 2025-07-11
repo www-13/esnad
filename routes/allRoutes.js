@@ -38,8 +38,13 @@ function isAdmin(req, res, next) {
   }
 }
 
+// Redirect root URL (/) to guest page
+router.get('/', (req, res) => {
+  res.redirect('/guest');
+});
+
 // Render login page
-router.get(['/login', '/'], (req, res) => {
+router.get('/login', (req, res) => {
   res.render('login', { 
     loginError: null, 
     signupError: null,
@@ -82,7 +87,7 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  // Admin accounts list - keep your original admin emails and passwords here
+  // Admin accounts list
   const adminUsers = [
     { email: 'adamprog13@gmail.com', password: 'adam-abed-elprog_13' },
     { email: 'aser15abed@gmail.com', password: 'aser_abed15' },
@@ -351,8 +356,6 @@ router.delete('/profile/recentlyBooks/:bookId', isLoggedIn, async (req, res) => 
     res.status(500).send('Server error');
   }
 });
-
-
 
 
 module.exports = router;
