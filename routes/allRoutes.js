@@ -40,7 +40,11 @@ function isAdmin(req, res, next) {
 
 // Redirect root URL (/) to guest page
 router.get('/', (req, res) => {
-  res.redirect('/guest');
+  res.redirect('/landing');
+});
+
+router.get('/landing', (req, res) => {
+  res.render('landing')
 });
 
 // Render login page
@@ -359,3 +363,8 @@ router.delete('/profile/recentlyBooks/:bookId', isLoggedIn, async (req, res) => 
 
 
 module.exports = router;
+
+
+/* 
+
+*/
