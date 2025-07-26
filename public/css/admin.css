@@ -3,166 +3,178 @@ body {
   max-width: 600px;
   margin: 40px auto;
   padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #f8fafc;
   min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.2) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: -1;
+  color: #1e293b;
+  line-height: 1.6;
 }
 
 h1 {
   text-align: center;
-  color: #fff;
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 30px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(45deg, #fff, #e0e7ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #1e293b;
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin-bottom: 40px;
+  letter-spacing: -0.025em;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  position: relative;
+  gap: 24px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+   box-shadow:  
+     0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
 }
 
-form::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-  animation: shine 3s linear infinite;
-  pointer-events: none;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-weight: 500;
+  color: #374151;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
 }
 
 input {
-  padding: 16px 20px;
+  padding: 12px 16px;
   font-size: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  color: #fff;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1e293b;
+  transition: all 0.2s ease-in-out;
   outline: none;
+  font-family: inherit;
 }
 
 input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: #94a3b8;
 }
 
 input:focus {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 
-    0 0 0 4px rgba(255, 255, 255, 0.1),
-    0 8px 25px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input:hover:not(:focus) {
+  border-color: #cbd5e1;
 }
 
 button {
-  padding: 16px 24px;
-  font-size: 18px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #3b82f6;
   color: white;
   border: none;
-  border-radius: 50px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 
-    0 8px 20px rgba(102, 126, 234, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  position: relative;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 10px;
+  transition: all 0.2s ease-in-out;
+  font-family: inherit;
+  margin-top: 8px;
 }
 
-button::after {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  border-radius: 50px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+button.delete-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  background: #dc2626;
 }
 
 button:hover {
-  transform: translateY(-2px);
+  background: #2563eb;
+  transform: translateY(-1px);
   box-shadow: 
-    0 12px 30px rgba(102, 126, 234, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-button:hover::after {
-  opacity: 1;
+button.delete-btn:hover {
+  background: #b91c1c;
 }
 
 button:active {
   transform: translateY(0);
+  background: #1d4ed8;
+}
+
+button.delete-btn:active {
+  background: #991b1b;
+}
+
+button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 p.message {
   margin-top: 20px;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
-  color: #4ade80;
-  font-size: 18px;
-  text-shadow: 0 2px 10px rgba(74, 222, 128, 0.3);
+  color: #059669;
+  font-size: 16px;
+  padding: 12px 16px;
+  background: #ecfdf5;
+  border: 1px solid #d1fae5;
+  border-radius: 8px;
 }
 
 p.error {
-  color: #ff6b6b;
-  text-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+/* Additional professional elements */
+.form-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.form-description {
+  color: #64748b;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.required {
+  color: #dc2626;
+}
+
+/* Focus indicators for accessibility */
+input:focus-visible,
+button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
 }
 
 /* Responsive improvements */
 @media (max-width: 768px) {
   body {
     margin: 20px auto;
-    padding: 15px;
+    padding: 16px;
   }
   
   h1 {
-    font-size: 2rem;
+    font-size: 1.875rem;
   }
   
   form {
-    padding: 20px;
+    padding: 24px;
   }
   
   input, button {
-    padding: 14px 18px;
+    padding: 12px 16px;
   }
 }
