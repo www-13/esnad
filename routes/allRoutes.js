@@ -219,6 +219,24 @@ router.get('/guest', async (req, res) => {
   }
 });
 
+// Dynamic book detail page
+router.get('/book/:id', async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const book = await Book.findById(bookId);
+
+    if (!book) {
+      return res.status(404).send('Book not found');
+    }
+
+    res.render('bookp', { book, userName: req.session.userName }); // Send book data to bookp.ejs
+  } catch (err) {
+    console.error('Error fetching book:', err);
+    res.status(500).send('Server error');
+  }
+});
+
+
 // API route to get all books
 router.get('/api/books', async (req, res) => {
   try {
@@ -295,10 +313,31 @@ router.get('/admin', isAdmin, async (req, res) => {
 
 // POST /admin - add new book
 router.post('/admin', isAdmin, async (req, res) => {
-  const { title, author, category, image, pdf } = req.body;
+  const {
+    title,
+    author,
+    category,
+    image,
+    pdf,
+    description,
+    pages,
+    language,
+    year
+  } = req.body;
 
   try {
-    const newBook = new Book({ title, author, category, image, pdf });
+    const newBook = new Book({
+      title,
+      author,
+      category,
+      image,
+      pdf,
+      description,
+      pages,
+      language,
+      year
+    });
+
     await newBook.save();
     res.redirect('/admin');
   } catch (err) {
@@ -322,6 +361,7 @@ router.post('/admin/delete/:id', isAdmin, async (req, res) => {
     res.redirect('/admin');
   }
 });
+
 
 // Updated profile route with recentlyBooks (only for logged-in users)
 router.get('/profile', isLoggedIn, async (req, res) => {
