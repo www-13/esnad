@@ -1,12 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= book.title || '?' %> - Esnad</title>
+    
+    <title><%= book.title || '?' %> - Esnad Library</title>
+    
+    <meta name="description" content="<%= book.description || 'Read and download ' + (book.title || 'this book') + ' at Esnad Library for free.' %>">
+    <meta name="keywords" content="<%= (book.title ? book.title + ', ' : '') + (book.author ? book.author + ', ' : '') + (book.category || '') + ', free books, download pdf, Esnad Library' %>">
+    
+    <!-- Open Graph for social media sharing -->
+    <meta property="og:title" content="<%= book.title || '?' %> - Esnad Library">
+    <meta property="og:description" content="<%= book.description || 'Read and download this book for free at Esnad Library.' %>">
+    <meta property="og:image" content="<%= book.image || '/img/default-book-cover.jpg' %>">
+    <meta property="og:url" content="https://esnad.onrender.com/books/view/<%= book._id %>">
+    <meta property="og:type" content="book">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= book.title || '?' %> - Esnad Library">
+    <meta name="twitter:description" content="<%= book.description || 'Free access to this book at Esnad Library.' %>">
+    <meta name="twitter:image" content="<%= book.image || '/img/default-book-cover.jpg' %>">
+    
+    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2526175659497003"
     crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/css/bookp.css">
+    <meta name="google-adsense-account" content="ca-pub-2526175659497003">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/css/bookp.css">    
 </head>
 <body>
     <header class="header">
