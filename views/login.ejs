@@ -3,256 +3,229 @@
 <head>
     <meta charset="UTF-8" />
     <title>Esnad | login & signup</title>
-    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="stylesheet" href="/css/login.css"/>
     <link rel="icon" href="/img/idk.jfif">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2526175659497003"
-     crossorigin="anonymous"></script>
-<meta name="google-site-verification" content="VIq-ChoUhw8vP5JtlBc_h2kZYgvqxGs8-h-qHrNDyg0" />
-<meta name="google-adsense-account" content="ca-pub-2526175659497003">
-    <style>
-        /* Add styles for the topic cards */
-        .topics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .topic-card {
-            display: block;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .topic-card:hover {
-            border-color: #1e3c72;
-            background-color: #f5f7ff;
-        }
-        
-        .topic-card input[type="checkbox"] {
-            display: none;
-        }
-        
-        .topic-card input[type="checkbox"]:checked + .topic-content {
-            border-color: #1e3c72;
-            background-color: #e6eeff;
-        }
-        
-        .topic-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-            border-radius: 8px;
-            border: 2px solid transparent;
-        }
-        
-        .topic-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-        
-        .continue-btn {
-            margin-top: 20px;
-            width: 100%;
-        }
-        
-        .subtitle {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #555;
-        }
-    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2526175659497003"
+    crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2526175659497003">
 </head>
 <body>
-    <div class="floating-books">
-        <% for (let i = 0; i < 9; i++) { %>
-            <div class="book"></div>
-        <% } %>
-    </div>
+    <div class="main-container">
 
-    <div class="container">
-        <h1 class="logo">📚 Esnad</h1>
-        <p class="tagline">Discover your next adventure</p>
-
-        <!-- Error Messages -->
-        <% if (signupError) { %>
-            <p class="error-message" style="display: block;"><%= signupError %></p>
-        <% } %>
-        <% if (loginError) { %>
-            <p class="error-message" style="display: block;"><%= loginError %></p>
-        <% } %>
-
-        <!-- Login/Signup Forms (only show if not showing topics) -->
-        <% if (!showFavoriteTopics) { %>
-            <!-- Login Form -->
-            <div id="login-form" class="form active">
-                <form action="/login" method="POST">
-                    <div class="form-group">
-                        <input type="email" name="email" id="login-email" placeholder=" " required />
-                        <label for="login-email">Email</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" id="login-password" placeholder=" " required />
-                        <label for="login-password">Password</label>
-                    </div>
-                    <button type="submit" class="btn">Login</button>
-                </form>
-                <div class="form-switch">
-                    Don't have an account? <a href="#" onclick="switchForm()">Sign Up</a>
-                </div>
-                <div class="divider"><span>or</span></div>
-                <form action="/guest" method="GET">
-                    <button type="submit" class="btn guest-btn">Continue as Guest</button>
-                </form>
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="brand-content">
+                <div class="brand-logo"><img width="100px" style="border-radius: 20px;" src="/img/idk.jfif" alt="esnad logo"></div>
+                <h1 class="brand-title">Welcome Back!</h1>
+                <p class="brand-subtitle">To keep connected with us please login with your personal info</p>
+                <a href="#" class="welcome-btn" onclick="switchToLogin()">SIGN IN</a>
             </div>
+        </div>
 
-            <!-- Signup Form -->
-            <div id="signup-form" class="form">
-                <form action="/signup" method="POST">
-                    <div class="form-group">
-                        <input type="text" name="name" id="signup-name" placeholder=" " required />
-                        <label for="signup-name">Name</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="email" id="signup-email" placeholder=" " required />
-                        <label for="signup-email">Email</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" id="signup-password" placeholder=" " required />
-                        <label for="signup-password">Password</label>
-                    </div>
-                    <button type="submit" class="btn">Sign Up</button>
-                </form>
-                <div class="form-switch">
-                    Already have an account? <a href="#" onclick="switchForm()">Login</a>
-                </div>
-            </div>
-        <% } %>
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <!-- <div class="floating-books">
+                <% for (let i = 0; i < 9; i++) { %>
+                    <div class="book"></div>
+                <% } %>
+            </div> -->
 
-        <!-- Favorite Topics Selection -->
-        <% if (showFavoriteTopics) { %>
-            <div id="favorite-topics-form" class="form active">
-                <h2>Choose Your Favorite Topics</h2>
-                <p class="subtitle">Select topics that interest you to personalize your experience</p>
-                
-                <form action="/favorite-topics" method="POST">
-                    <div class="topics-grid">
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Fiction" />
-                            <div class="topic-content">
-                                <span class="topic-icon">📚</span>
-                                <span class="topic-name">Fiction</span>
-                            </div>
-                        </label>
+            <div class="container">
+                <!-- Error Messages -->
+                <% if (signupError) { %>
+                    <div class="error-message" style="display: block;"><%= signupError %></div>
+                <% } %>
+                <% if (loginError) { %>
+                    <div class="error-message" style="display: block;"><%= loginError %></div>
+                <% } %>
+
+                <!-- Forms -->
+                <% if (!showFavoriteTopics) { %>
+                    <!-- Login Form -->
+                    <div id="login-form" class="form">
+                        <div class="form-header">
+                            <h2 class="form-title">Sign In</h2>
+                            <p class="form-subtitle">Welcome back to Esnad</p>
+                        </div>
                         
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Science Fiction" />
-                            <div class="topic-content">
-                                <span class="topic-icon">🚀</span>
-                                <span class="topic-name">Science Fiction</span>
+                        <form action="/login" method="POST">
+                            <div class="form-group">
+                                <input type="email" name="email" id="login-email" placeholder="Email" required />
+                                <span class="input-icon">✉</span>
                             </div>
-                        </label>
+                            <div class="form-group">
+                                <input type="password" name="password" id="login-password" placeholder="Password" required />
+                                <span class="input-icon">🔒</span>
+                            </div>
+                            <button type="submit" class="btn">SIGN IN</button>
+                        </form>
                         
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Mystery" />
-                            <div class="topic-content">
-                                <span class="topic-icon">🔍</span>
-                                <span class="topic-name">Mystery</span>
-                            </div>
-                        </label>
+                        <div class="form-switch">
+                            Don't have an account? <a href="#" onclick="switchForm()">Create Account</a>
+                        </div>
                         
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Romance" />
-                            <div class="topic-content">
-                                <span class="topic-icon">💕</span>
-                                <span class="topic-name">Romance</span>
-                            </div>
-                        </label>
+                        <div class="divider"><span>or</span></div>
                         
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Fantasy" />
-                            <div class="topic-content">
-                                <span class="topic-icon">🐉</span>
-                                <span class="topic-name">Fantasy</span>
-                            </div>
-                        </label>
-                        
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="History" />
-                            <div class="topic-content">
-                                <span class="topic-icon">⏳</span>
-                                <span class="topic-name">History</span>
-                            </div>
-                        </label>
-                        
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Biography" />
-                            <div class="topic-content">
-                                <span class="topic-icon">👤</span>
-                                <span class="topic-name">Biography</span>
-                            </div>
-                        </label>
-                        
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Self Help" />
-                            <div class="topic-content">
-                                <span class="topic-icon">💪</span>
-                                <span class="topic-name">Self Help</span>
-                            </div>
-                        </label>
-                        
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Technology" />
-                            <div class="topic-content">
-                                <span class="topic-icon">💻</span>
-                                <span class="topic-name">Technology</span>
-                            </div>
-                        </label>
-                        
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Travel" />
-                            <div class="topic-content">
-                                <span class="topic-icon">✈️</span>
-                                <span class="topic-name">Travel</span>
-                            </div>
-                        </label>
-                        
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Health" />
-                            <div class="topic-content">
-                                <span class="topic-icon">🏥</span>
-                                <span class="topic-name">Health</span>
-                            </div>
-                        </label>
-                        
-                        <label class="topic-card">
-                            <input type="checkbox" name="topics" value="Business" />
-                            <div class="topic-content">
-                                <span class="topic-icon">💼</span>
-                                <span class="topic-name">Business</span>
-                            </div>
-                        </label>
+                        <form action="/guest" method="GET">
+                            <button type="submit" class="btn guest-btn">Continue as Guest</button>
+                        </form>
                     </div>
-                    
-                    <button type="submit" class="btn continue-btn">Continue to Esnad</button>
-                </form>
+
+                    <!-- Signup Form -->
+                    <div id="signup-form" class="form active">
+                        <div class="form-header">
+                            <h2 class="form-title">Create Account</h2>
+                            <p class="form-subtitle">or use your email for registration</p>
+                        </div>
+                        
+                        <form action="/signup" method="POST">
+                            <div class="form-group">
+                                <input type="text" name="name" id="signup-name" placeholder="Name" required />
+                                <span class="input-icon">👤</span>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" id="signup-email" placeholder="Email" required />
+                                <span class="input-icon">✉</span>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" id="signup-password" placeholder="Password" required />
+                                <span class="input-icon">🔒</span>
+                            </div>
+                            <button type="submit" class="btn">SIGN UP</button>
+                        </form>
+                        
+                        <div class="form-switch">
+                            Already have an account? <a href="#" onclick="switchForm()">Sign In</a>
+                        </div>
+                    </div>
+                <% } %>
+
+                <!-- Topics Selection -->
+                <% if (showFavoriteTopics) { %>
+                    <div id="favorite-topics-form" class="form active">
+                        <div class="form-header">
+                            <h2 class="form-title">Choose Your Interests</h2>
+                            <p class="form-subtitle">Select topics that interest you to get personalized recommendations</p>
+                        </div>
+                        
+                        <form action="/favorite-topics" method="POST">
+                            <div class="topics-grid">
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Fiction" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">📚</span>
+                                        <span class="topic-name">Fiction</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Science Fiction" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">🚀</span>
+                                        <span class="topic-name">Science Fiction</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Mystery" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">🔍</span>
+                                        <span class="topic-name">Mystery</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Romance" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">💕</span>
+                                        <span class="topic-name">Romance</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Fantasy" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">🐉</span>
+                                        <span class="topic-name">Fantasy</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="History" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">⏳</span>
+                                        <span class="topic-name">History</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Biography" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">👤</span>
+                                        <span class="topic-name">Biography</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Self Help" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">💪</span>
+                                        <span class="topic-name">Self Help</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Technology" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">💻</span>
+                                        <span class="topic-name">Technology</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Travel" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">✈️</span>
+                                        <span class="topic-name">Travel</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Health" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">🏥</span>
+                                        <span class="topic-name">Health</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="topic-card">
+                                    <input type="checkbox" name="topics" value="Business" />
+                                    <div class="topic-content">
+                                        <span class="topic-icon">💼</span>
+                                        <span class="topic-name">Business</span>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="btn">CONTINUE</button>
+                        </form>
+                    </div>
+                <% } %>
             </div>
-        <% } %>
+        </div>
     </div>
 
     <script>
-        // Switch between login and signup forms
         function switchForm() {
             document.querySelector('#login-form').classList.toggle('active');
             document.querySelector('#signup-form').classList.toggle('active');
         }
 
-        // Add visual feedback for selected topics
+        function switchToLogin() {
+            document.querySelector('#signup-form').classList.remove('active');
+            document.querySelector('#login-form').classList.add('active');
+        }
+
         document.querySelectorAll('.topic-card input[type="checkbox"]').forEach(checkbox => {
             checkbox.addEventListener('change', function() {
                 if (this.checked) {
