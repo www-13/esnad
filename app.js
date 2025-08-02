@@ -1,4 +1,4 @@
-require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -40,4 +40,5 @@ app.use(booksRoutes);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
 
