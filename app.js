@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -9,7 +10,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://learningDatabse:ZEfnsaXJtWgwGSB3@adamlearningcluster.tkbqyyq.mongodb.net/Esnad?retryWrites=true&w=majority&appName=adamlearningcluster")
+mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
