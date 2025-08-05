@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONG_URL)
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
-  secret: 'anamesharefbesarakabasmomkentokonesnadmasrou3elkotoub',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false } // Set true only if HTTPS
@@ -40,6 +40,7 @@ app.use(booksRoutes);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
 
 
 
