@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://learningDatabse:ZEfnsaXJtWgwGSB3@adamlearningcluster.tkbqyyq.mongodb.net/Esnad?retryWrites=true&w=majority&appName=adamlearningcluster")
+mongoose.connect(process.env.MONG_URL)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
@@ -40,5 +40,6 @@ app.use(booksRoutes);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
 
 
