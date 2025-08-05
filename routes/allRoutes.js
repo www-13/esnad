@@ -94,7 +94,7 @@ router.post('/login', async (req, res) => {
   // Admin accounts list
   const adminUsers = [
     { email: 'adamprog13@gmail.com', password: 'adam-abed-elprog_13' },
-    { email: 'aser15abed@gmail.com', password: 'aser_abed15' },
+    { email: 'eyadahmed@gmail.com', password: 'eyad123_ahmed' },
     { email: 'omar123@gmail.com', password: '123123' },
   ];
 
@@ -406,4 +406,5 @@ module.exports = router;
 /* 
 
 */
+
 
