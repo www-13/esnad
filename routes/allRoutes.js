@@ -92,11 +92,7 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   // Admin accounts list
-  const adminUsers = [
-    { email: 'adamprog13@gmail.com', password: 'adam-abed-elprog_13' },
-    { email: 'eyadahmed@gmail.com', password: 'eyad123_ahmed' },
-    { email: 'omar123@gmail.com', password: '123123' },
-  ];
+  const adminUsers = JSON.parse(process.env.ADMIN_USERS);
 
   // Check if user is admin
   const admin = adminUsers.find(
@@ -406,5 +402,6 @@ module.exports = router;
 /* 
 
 */
+
 
 
