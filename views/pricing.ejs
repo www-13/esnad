@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esnad | Pricing Plans</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="/img/idk.jfif">
+    <style>
+        :root {
+            --primary-red: #902f36;
+            --primary-red-hover: #6b2329;
+            --secondary-red: #a03440;
+            --light-red: #fef2f2;
+            --accent-gold: #f59e0b;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --background-primary: #ffffff;
+            --background-secondary: #f9fafb;
+            --background-tertiary: #f3f4f6;
+            --border-light: #e5e7eb;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--background-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 20px;
+        }
+
+        .pricing-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 16px;
+        }
+
+        .pricing-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .plan-card {
+            background: var(--background-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 40px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .plan-card.pro {
+            border: 2px solid var(--accent-gold);
+            transform: scale(1.05);
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--accent-gold), #fbbf24);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .plan-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .plan-name.free {
+            color: var(--text-primary);
+        }
+
+        .plan-name.pro {
+            color: var(--primary-red);
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .plan-price.free {
+            color: var(--text-secondary);
+        }
+
+        .plan-price.pro {
+            color: var(--primary-red);
+        }
+
+        .plan-period {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 32px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .plan-features li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .feature-icon.included {
+            background: #10b981;
+            color: white;
+        }
+
+        .feature-icon.excluded {
+            background: #ef4444;
+            color: white;
+        }
+
+        .plan-button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .plan-button.free {
+            background: var(--background-tertiary);
+            color: var(--text-secondary);
+        }
+
+        .plan-button.free:hover {
+            background: var(--border-light);
+        }
+
+        .plan-button.pro {
+            background: linear-gradient(135deg, var(--primary-red), var(--secondary-red));
+            color: white;
+        }
+
+        .plan-button.pro:hover {
+            background: linear-gradient(135deg, var(--primary-red-hover), var(--primary-red));
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-link a {
+            color: var(--primary-red);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .back-link a:hover {
+            color: var(--primary-red-hover);
+        }
+
+        @media (max-width: 768px) {
+            .plans-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .plan-card.pro {
+                transform: none;
+            }
+
+            .pricing-title {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="pricing-header">
+            <% if (typeof expired !== 'undefined' && expired) { %>
+            <div style="background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 16px; margin-bottom: 20px; color: #991b1b;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Your Pro plan has expired!</strong> Your subscription was valid for 1 month and has now ended. Upgrade again to continue enjoying premium features.
+            </div>
+            <% } %>
+            <h1 class="pricing-title">Choose Your Plan</h1>
+            <p class="pricing-subtitle">
+                Select the perfect plan for your reading journey. Upgrade anytime to unlock premium features.
+            </p>
+        </div>
+
+        <div class="plans-container">
+           <!-- Free Plan -->
+<div class="plan-card">
+    <h2 class="plan-name free">Free</h2>
+    <div class="plan-price free">$0</div>
+    <div class="plan-period">Forever Free</div>
+    
+    <ul class="plan-features">
+        <!-- Included Features -->
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Access to the complete free book library</span>
+        </li>
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Read online and download PDF versions of books</span>
+        </li>
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Track recently viewed books</span>
+        </li>
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Curate and follow favorite topics</span>
+        </li>
+
+        <!-- Restricted Features -->
+        <li>
+            <span class="feature-icon excluded">
+                <i class="fas fa-times"></i>
+            </span>
+            <span>Ad-free experience</span>
+        </li>
+        <li>
+            <span class="feature-icon excluded">
+                <i class="fas fa-times"></i>
+            </span>
+            <span>Priority support</span>
+        </li>
+        <li>
+            <span class="feature-icon excluded">
+                <i class="fas fa-times"></i>
+            </span>
+            <span>Access to premium book collection</span>
+        </li>
+        <li>
+            <span class="feature-icon excluded">
+                <i class="fas fa-times"></i>
+            </span>
+            <span>Upload and add your own books to the platform</span>
+        </li>
+    </ul>
+
+    <a href="/index" class="plan-button free">Current Plan</a>
+</div>
+
+
+<!-- Pro Plan -->
+<div class="plan-card pro">
+    <div class="plan-badge">Most Popular</div>
+    <h2 class="plan-name pro">Pro</h2>
+    <div class="plan-price pro">$9.99</div>
+    <div class="plan-period">per month</div>
+    
+    <ul class="plan-features">
+        <!-- Features included (everything Free cannot do) -->
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Access to the complete free book library</span>
+        </li>
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Read online and download PDF versions of books</span>
+        </li>
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Track recently viewed books</span>
+        </li>
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Curate and follow favorite topics</span>
+        </li>
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Ad-free experience</span>
+        </li>
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Priority support</span>
+        </li>
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Premium book collection (coming soon)</span>
+        </li>
+        <li>
+            <span class="feature-icon included">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Add your own books to the website with no limit 🔥🔥</span>
+        </li>
+    </ul>
+
+    <!-- PayPal checkout button -->
+    <button class="plan-button pro" onclick="startPayment()">
+        <i class="fas fa-crown"></i> Upgrade to Pro
+    </button>
+</div>
+
+        </div>
+
+        <div class="back-link">
+            <a href="#" onclick="idk()">
+                <i class="fas fa-arrow-left"></i>
+                Back to Library
+            </a>
+        </div>
+    </div>
+
+    <script>
+
+        function idk() {
+            window.history.back()
+        }
+        // Function to initiate PayPal payment
+        async function startPayment() {
+            try {
+                // Show loading state
+                const button = document.querySelector('.plan-button.pro');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                button.disabled = true;
+                
+                // Call backend to create PayPal order
+                const response = await fetch('/pay', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.approvalUrl) {
+                    // Redirect to PayPal for payment approval
+                    window.location.href = data.approvalUrl;
+                } else {
+                    throw new Error(data.message || 'Payment initialization failed');
+                }
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                alert('Payment failed: ' + error.message);
+                
+                // Restore button state
+                const button = document.querySelector('.plan-button.pro');
+                button.innerHTML = '<i class="fas fa-crown"></i> Upgrade to Pro';
+                button.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

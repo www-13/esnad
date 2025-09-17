@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="icon" href="/img/idk.jfif">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2526175659497003"
+   crossorigin="anonymous"></script>
+  <title>Admin Dashboard</title>
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FH1GSEHCJG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FH1GSEHCJG');
+</script>
+
+</head>
+<body>
+  <h1>Admin Dashboard - Add New Book</h1>
+  <form action="/admin" method="POST">
+    <input type="text" name="title" placeholder="Book Title" required />
+    <input type="text" name="author" placeholder="Author" required />
+    <input type="text" name="category" placeholder="Category" required />
+    <input type="text" name="image" placeholder="Image URL (optional)" />
+    <input type="text" name="pdf" placeholder="Google Drive PDF Link" required />
+  
+    <!-- 🆕 NEW FIELDS -->
+    <textarea required name="description" placeholder="Book Description"></textarea>
+    <input required type="number" name="pages" placeholder="Number of Pages" />
+    <input required type="text" name="language" placeholder="Language (e.g., Arabic, English)" />
+    <input required type="text" name="year" placeholder="Publication Year (e.g., 2022)" />
+  
+    <button type="submit">Add Book</button>
+  </form>
+  
+
+  <h2>Books List</h2>
+<ul>
+  <% if (books && books.length > 0) { %>
+    <% books.forEach(book => { %>
+      <li>
+        <strong><%= book.title %></strong> by <%= book.author %> - <%= book.category %>
+        <form action="/admin/delete/<%= book._id %>" method="POST" style="display: inline; padding: 0px;">
+          <button type="submit" onclick="return confirm('Delete this book?');">Delete</button>
+        </form>
+      </li>
+    <% }) %>
+  <% } else { %>
+    <li>No books available</li>
+  <% } %>
+</ul>
+
+
+<% if (message && typeof message === 'string') { %>
+  <p class="<%= message.includes('Error') ? 'error' : 'message' %>"><%= message %></p>
+<% } %>
+
+<script>
+  document.addEventListener('contextmenu', e => e.preventDefault());
+</script>
+</body>
+</html>

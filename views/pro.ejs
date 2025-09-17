@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esnad | Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="/img/idk.jfif">
+    <meta name="description" content="Esnad lets you explore and read your favorite books online for free. Enjoy Fiction, History, Technology and more!">
+    <meta name="keywords" content="books online, free PDF books, fiction books, technology books, read online, Esnad, library, ebooks, online library, download books, best books, digital books, education books, Arabic books, English books, children's books, science books, literature, novels, storytelling, self-help books, reference books, history books, textbooks, classic books, mystery books, romance books, fantasy books, adventure books, learning, free ebooks, pdf download">
+    <meta name="author" content="Adam Abed">
+    <meta property="og:title" content="Esnad - Read Books Online for Free">
+    <meta property="og:description" content="Explore your favorite books and PDFs online. Join Esnad today!">
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2526175659497003" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2526175659497003">
+    <meta name="google-site-verification" content="VIq-ChoUhw8vP5JtlBc_h2kZYgvqxGs8-h-qHrNDyg0" /> -->
+    <link rel="stylesheet" href="/css/index.css">
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+    <style>
+        :root {
+          --primary-red: #902f36;
+          --primary-red-hover: #6b2329;
+          --secondary-red: #a03440;
+          --light-red: #fef2f2;
+          --accent-gold: #f59e0b;
+          --text-primary: #1f2937;
+          --text-secondary: #4b5563;
+          --text-muted: #6b7280;
+          --background-primary: #ffffff;
+          --background-secondary: #f9fafb;
+          --background-tertiary: #f3f4f6;
+          --background-dark: #111827;
+          --border-light: #e5e7eb;
+          --border-medium: #d1d5db;
+          --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+          --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+          --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+          --radius-sm: 6px;
+          --radius-md: 12px;
+          --radius-lg: 16px;
+          --gradient-primary: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%);
+          --gradient-accent: linear-gradient(135deg, var(--accent-gold) 0%, #fbbf24 100%);
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+          background: var(--background-secondary);
+          color: var(--text-primary);
+          line-height: 1.6;
+          overflow-x: hidden;
+        }
+
+        /* Subtle Background Pattern */
+        body::before {
+          content: '';
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: 
+            radial-gradient(circle at 20% 80%, rgba(144, 47, 54, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
+          z-index: -1;
+        }
+
+        /* Header */
+        .header {
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid var(--border-light);
+          box-shadow: var(--shadow-sm);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+          background: rgba(255, 255, 255, 0.98);
+          box-shadow: var(--shadow-md);
+        }
+
+        .header-container {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 0 1.5rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 70px;
+        }
+
+        .logo-section {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          z-index: 10;
+        }
+
+        .logo {
+          position: relative;
+          transition: transform 0.2s ease;
+        }
+
+        .logo img {
+          width: 45px;
+          height: 45px;
+          border-radius: 50%;
+          box-shadow: var(--shadow-sm);
+          transition: all 0.2s ease;
+        }
+
+        .logo:hover {
+          transform: scale(1.05);
+        }
+
+        .brand-text {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .brand-name {
+          font-size: 22px;
+          font-weight: 700;
+          color: var(--primary-red);
+          line-height: 1.2;
+          letter-spacing: -0.3px;
+        }
+
+        .brand-subtitle {
+          font-size: 12px;
+          color: var(--text-muted);
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        /* Desktop Navigation */
+        .header-nav {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+        }
+
+        .nav-item {
+          color: var(--text-secondary);
+          text-decoration: none;
+          font-weight: 500;
+          font-size: 14px;
+          transition: all 0.2s ease;
+          padding: 0.5rem 1rem;
+          border-radius: var(--radius-sm);
+          position: relative;
+        }
+
+        .nav-item:hover {
+          color: var(--primary-red);
+          background: var(--light-red);
+        }
+
+        .user-profile {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.5rem 1rem;
+          background: var(--background-tertiary);
+          border-radius: var(--radius-sm);
+          transition: all 0.2s ease;
+          cursor: pointer;
+        }
+
+        .user-profile:hover {
+          background: var(--light-red);
+          color: var(--primary-red);
+        }
+
+        .user-profile a {
+          color: inherit;
+          text-decoration: none;
+          font-weight: 500;
+          font-size: 14px;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+          display: none;
+          flex-direction: column;
+          cursor: pointer;
+          padding: 0.5rem;
+          gap: 4px;
+          transition: all 0.3s ease;
+          background: none;
+          border: none;
+          z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+          width: 25px;
+          height: 3px;
+          background: var(--primary-red);
+          border-radius: 3px;
+          transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+          transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+          transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+          display: none;
+          position: fixed;
+          top: 70px;
+          left: 0;
+          right: 0;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid var(--border-light);
+          box-shadow: var(--shadow-lg);
+          z-index: 999;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease;
+        }
+
+        .mobile-nav.active {
+          max-height: 400px;
+        }
+
+        .mobile-nav-items {
+          padding: 1rem 1.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .mobile-nav-item {
+          color: var(--text-secondary);
+          text-decoration: none;
+          font-weight: 500;
+          font-size: 16px;
+          padding: 0.75rem 1rem;
+          border-radius: var(--radius-sm);
+          transition: all 0.2s ease;
+        }
+
+        .mobile-nav-item:hover {
+          color: var(--primary-red);
+          background: var(--light-red);
+        }
+
+        .mobile-user-profile {
+          margin-top: 1rem;
+          padding: 1rem;
+          background: var(--background-tertiary);
+          border-radius: var(--radius-sm);
+          text-align: center;
+        }
+
+        .mobile-user-profile a {
+          color: var(--text-primary);
+          text-decoration: none;
+          font-weight: 500;
+        }
+
+        /* Books Grid */
+        .books-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 1.5rem;
+          padding: 2rem;
+        }
+
+        .book-card {
+          background: var(--background-primary);
+          border-radius: var(--radius-md);
+          overflow: hidden;
+          transition: all 0.2s ease;
+          cursor: pointer;
+          box-shadow: var(--shadow-sm);
+          border: 1px solid var(--border-light);
+        }
+
+        .book-card:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .header-nav {
+            display: none;
+          }
+          
+          .mobile-menu-btn {
+            display: flex;
+          }
+          
+          .mobile-nav {
+            display: block;
+          }
+          
+          .books-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            padding: 1.5rem 1rem;
+          }
+          .user-profile{
+            display: none;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .user-profile span {
+            display: none;
+          }
+          
+          .brand-name {
+            font-size: 18px;
+          }
+          
+          .brand-subtitle {
+            font-size: 10px;
+          }
+          
+          .books-grid {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            padding: 1rem;
+          }
+        }
+
+        .add-book-form {
+  padding: 2rem;
+  background: #ffffff; /* background-primary */
+  border-radius: 12px; /* radius-md */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* shadow-sm */
+  margin: 2rem auto;
+  max-width: 700px;
+}
+
+.add-book-form h3 {
+  font-size: 1.5rem;
+  color: #902f36; /* primary-red */
+  margin-bottom: 0.5rem;
+}
+
+.add-book-form p {
+  color: #6b7280; /* text-muted */
+  margin-bottom: 1.5rem;
+}
+
+/* Notification */
+.form-notification {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 14px;
+  display: none;
+  color: #fff;
+}
+
+.form-notification.success {
+  background-color: #16a34a; /* green */
+}
+
+.form-notification.error {
+  background-color: #dc2626; /* red */
+}
+
+.add-book-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.add-book-form input,
+.add-book-form textarea {
+  padding: 0.75rem 1rem;
+  border-radius: 6px; /* radius-sm */
+  border: 1px solid #d1d5db; /* border-medium */
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+}
+
+.add-book-form button {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background: #902f36; /* primary-red */
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-book-form button:hover {
+  background: #a03440; /* secondary-red */
+}
+
+.upload-section {
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.upload-section h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.pro-upload-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #444;
+}
+
+.pro-upload-form input,
+.pro-upload-form textarea {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.pro-upload-form input[disabled] {
+  background: #eee;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.btn-submit {
+  background: #902f36;
+  color: #fff;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-submit:hover {
+  background: #74252a;
+}
+
+        /* Rest of your existing styles would go here... */
+        /* I'm including the essential responsive styles above */
+    </style>
+
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo"><img style="border-radius: 50%;" width="60px" src="/img/idk.jfif"></div>
+                <div class="brand-text">
+                    <div class="brand-name">Esnad</div>
+                    <div class="brand-subtitle">No Risk No Story!</div>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a style="color: #902f36 !important;" href="/index" class="nav-item">Home</a>
+                <a href="/profile" class="nav-item">Profile</a>
+                <a href="#footer" class="nav-item">Contact</a>
+                <a href="/pricing" class="nav-item">Pricing</a>
+                <a href="/login" class="nav-item">Login</a>
+            </nav>
+            
+            <!-- Hamburger Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="user-profile">
+                <a href="/profile" style="text-decoration: none; color: inherit;"><%= userName %></a>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-items">
+                <a href="/index" class="mobile-nav-item">Home</a>
+                <a href="/profile" class="mobile-nav-item">Profile</a>
+                <a href="#" class="mobile-nav-item">Contact</a>
+                <a href="/logout" class="mobile-nav-item">Logout</a>
+                <a href="/login" class="mobile-nav-item">Login</a>
+                <div class="mobile-user-profile">
+                    <a href="/profile"><%= userName %></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <section class="search-hero">
+            <h1 class="search-title">Digital Knowledge Hub</h1>
+            <p class="search-subtitle">Discover, explore, and immerse yourself in our vast collection of digital books and resources</p>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search by title, author, or keyword..." />
+                    <div class="search-filters">
+                        <select id="categorySelect">
+                            <option value="all">All Categories</option>
+                            <option value="fiction">Fiction</option>
+                            <option value="science fiction">Science Fiction</option>
+                            <option value="mystery">Mystery</option>
+                            <option value="romance">Romance</option>
+                            <option value="fantasy">Fantasy</option>
+                            <option value="history">History</option>
+                            <option value="biography">Biography</option>
+                            <option value="self help">Self Help</option>
+                            <option value="technology">Technology</option>
+                            <option value="travel">Travel</option>
+                            <option value="health">Health</option>
+                            <option value="business">Business</option>
+                            <option value="magic">Magic</option>
+                            <option value="drama">Drama</option>
+                            <option value="comics">Comics</option>
+                            <option value="esnad">By Esnad</option>
+                        </select>
+                    </div>
+                    <button class="search-button" id="searchButton">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Featured Collection</h2>
+                <p class="section-subtitle">Curated selection of premium digital resources and bestselling titles</p>
+            </div>
+
+            <div class="books-grid" id="booksGrid">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading your digital library...</p>
+                </div>
+            </div>
+
+            <div class="library-info">
+                <div class="library-motto">
+                    Knowledge is the treasure of a wise man - Preserving wisdom for future generations
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section style="padding: 5rem;" class="upload-section">
+      <h2>Add Your Book</h2>
+    
+      <form action="/pro/books" method="POST" class="pro-upload-form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" placeholder="Book title" required>
+        </div>
+    
+        <div class="form-group">
+          <label for="author">Author</label>
+          <input type="text" id="author" name="author" placeholder="Author name" required>
+        </div>
+    
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" placeholder="Short description"></textarea>
+        </div>
+    
+        <div class="form-group">
+          <label for="category">Category</label>
+          <input type="text" id="category" name="category" placeholder="e.g. Adventure">
+        </div>
+    
+        <div class="form-group">
+          <label for="pdf">PDF Link</label>
+          <input type="url" id="pdf" name="pdf" placeholder="Paste PDF URL" required>
+        </div>
+    
+        <div class="form-group">
+          <label for="image">Cover Image</label>
+          <input type="url" id="image" name="image" placeholder="Cover image URL">
+        </div>
+    
+        <div class="form-group">
+          <label for="pages">Pages</label>
+          <input type="number" id="pages" name="pages" placeholder="Number of pages">
+        </div>
+    
+        <div class="form-group">
+          <label for="language">Language</label>
+          <input type="text" id="language" name="language" placeholder="e.g. English">
+        </div>
+    
+        <div class="form-group">
+          <label for="year">Year</label>
+          <input type="number" id="year" name="year" placeholder="Year of publication">
+        </div>
+    
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input type="text" id="price" value="Coming soon" disabled>
+        </div>
+    
+        <button type="submit" class="btn-submit">Add Book</button>
+      </form>
+    </section>
+
+
+    <footer id="footer">
+        <div class="content">
+          <div class="top">
+            <div class="logo-details">
+              <span class="logo_name">Esnad</span>
+            </div>
+            <div class="media-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://x.com/EsnadLib">X</a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.youtube.com/@esnadlib"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="link-boxes">
+            <ul class="box">
+                <img id="imggg" style="border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);" width="200px" src="/img/idk.jfif" alt="">
+            </ul>
+            <ul class="box">
+              <li class="link_name">Navigation</li>
+              <li><a href="/pro">Home</a></li>
+              <li><a href="#footer">Contact</a></li>
+              <li><a href="/profile">Profile</a></li>
+              <li><a href="/logout">Logout</a></li>
+            </ul>
+            <ul class="box">
+              <li class="link_name">Get in Touch</li>
+              <li><a href="https://wa.link/e3ezdq">WhatsApp</a></li>
+              <li><a href="#">esnadlib@gmail.com</a></li>
+              <li><a href="#">Instagram</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="bottom-details">
+          <div class="bottom_text">
+            <span class="copyright_text">Copyright © 2025 <a href="#">Esnad.</a> All rights reserved</span>
+            <span class="policy_terms">
+              <a href="https://otieu.com/4/9693357">Privacy Policy</a>
+              <a href="https://otieu.com/4/9693357">Terms & Conditions</a>
+            </span>
+          </div>
+        </div>
+    </footer>
+
+    <script>
+        let booksData = [];
+        let filteredBooks = [];
+
+        // Mobile menu functionality
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!mobileMenuBtn.contains(event.target) && !mobileNav.contains(event.target)) {
+                    mobileMenuBtn.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                }
+            });
+            
+            // Close mobile menu when clicking on a link
+            const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+            mobileNavItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    mobileMenuBtn.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                });
+            });
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Fetch books from API
+        async function fetchBooksFromDatabase() {
+            try {
+                const response = await fetch('/api/books');
+                if (!response.ok) throw new Error('Network response was not ok');
+                booksData = await response.json();
+                filteredBooks = booksData;
+                renderBooks();
+            } catch (error) {
+                console.error('Failed to fetch books:', error);
+                document.getElementById('booksGrid').innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">⚠️</div>
+                        <div class="no-results-title">Connection Error</div>
+                        <p>Unable to load books. Please check your connection and try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Render books grid with enhanced animations
+        function renderBooks() {
+            const booksGrid = document.getElementById('booksGrid');
+            
+            if (!filteredBooks.length) {
+                booksGrid.innerHTML = `
+                    <div class="no-results fade-in">
+                        <div class="no-results-icon">📚</div>
+                        <div class="no-results-title">No books found</div>
+                        <p>Try adjusting your search criteria or browse all categories</p>
+                    </div>
+                `;
+                return;
+            }
+
+            booksGrid.innerHTML = '';
+
+            filteredBooks.forEach((book, index) => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card fade-in';
+                bookCard.style.animationDelay = `${index * 0.1}s`;
+                bookCard.innerHTML = `
+                    <div class="book-cover">
+                        ${book.image ? 
+                            `<img src="${book.image}" alt="${book.title}" class="book-image">` : 
+                            `<div class="book-placeholder">
+                                <i class="fas fa-book"></i>
+                                <span>${book.title.substring(0, 30)}${book.title.length > 30 ? '...' : ''}</span>
+                            </div>`
+                        }
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">${book.title}</h3>
+                        <div class="book-author">${book.author || 'Unknown Author'}</div>
+                        <div class="book-meta">
+                            <span class="book-category">${book.category}</span>
+                        </div>
+                        <a href="/book/${book._id}" class="read-button">
+                            <i class="fas fa-book-open"></i>
+                            Read Now
+                        </a>
+                    </div>
+                `;
+
+                booksGrid.appendChild(bookCard);
+            });
+        }
+
+        // Enhanced search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const selectedCategory = document.getElementById('categorySelect').value.toLowerCase();
+
+            // Show loading state during search
+            if (searchTerm || selectedCategory !== 'all') {
+                const booksGrid = document.getElementById('booksGrid');
+                booksGrid.innerHTML = `
+                    <div class="loading fade-in">
+                        <div class="loading-spinner"></div>
+                        <p>Searching library...</p>
+                    </div>
+                `;
+
+                // Simulate search delay for better UX
+                setTimeout(() => {
+                    filteredBooks = booksData.filter(book => {
+                        const matchesSearch = !searchTerm || 
+                            (book.title && book.title.toLowerCase().includes(searchTerm)) || 
+                            (book.author && book.author.toLowerCase().includes(searchTerm)) ||
+                            (book.description && book.description.toLowerCase().includes(searchTerm));
+
+                        const matchesCategory = selectedCategory === 'all' || 
+                            (book.category && book.category.toLowerCase() === selectedCategory);
+
+                        return matchesSearch && matchesCategory;
+                    });
+
+                    renderBooks();
+                }, 300);
+            } else {
+                filteredBooks = booksData;
+                renderBooks();
+            }
+        }
+
+        // Search input enhancements
+        function setupSearchEnhancements() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const categorySelect = document.getElementById('categorySelect');
+
+            // Real-time search with debouncing
+            let searchTimeout;
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(performSearch, 300);
+            });
+
+            // Enhanced search button interaction
+            searchButton.addEventListener('click', performSearch);
+            
+            // Category change handler
+            categorySelect.addEventListener('change', performSearch);
+
+            // Enter key search
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
+
+        // Enhanced initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            setupMobileMenu(); // Add this line
+            fetchBooksFromDatabase();
+            setupSearchEnhancements();
+
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    
+</body> 
+</html>

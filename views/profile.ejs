@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Esnad | Profile</title>
+
+    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="icon" href="/img/idk.jfif">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2526175659497003"
+    crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2526175659497003">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FH1GSEHCJG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FH1GSEHCJG');
+</script>
+
+</head>
+<body>
+    <div class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo"><img style="border-radius: 50%;" width="60px" src="/img/idk.jfif"></div>
+                <div class="brand-text">
+                    <div class="brand-name">Esnad</div>
+                    <div class="brand-subtitle">No Risk No Story!</div>
+                </div>
+            </div>
+            <div class="header-nav">
+                <a
+                style="color: #902f36 !important;"
+                href="<%= (user && user.plan === 'free') ? '/index' : '/pro' %>"
+                class="nav-item"
+              >Home</a>              
+                <a href="/profile" class="nav-item">Profile</a>
+                <a href="#" class="nav-item">Contact</a>
+                <a href="/pricing" class="nav-item">Pricing</a>
+                <a href="/login" class="nav-item">login</a>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar"><%= user.name.charAt(0).toUpperCase() %></div>
+                <span><%= user.name %></span>
+                <a href="/logout" class="logout-button">Logout</a>
+              </div>
+              
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar"><%= user.name.charAt(0).toUpperCase() %></div>
+            <div class="profile-info">
+                <div class="profile-name"><%= user.name %></div>
+                <div class="profile-email"><%= user.email %></div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-number"><%= user.recentlyBooks.length %></span>
+                        <span class="stat-label">Currently Reading</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number"><%= user.favoriteTopics.length %></span>
+                        <span class="stat-label">Favorite Topics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Favorite Topics Section -->
+        <div class="content-section">
+            <div class="section-header">
+                <div class="section-title">Favorite Topics</div>
+                <div class="section-subtitle">Your preferred reading categories</div>
+            </div>
+            <div class="favorites-content">
+                <div class="favorite-topics">
+                    <% if (user.favoriteTopics.length > 0) { %>
+                        <% user.favoriteTopics.forEach(topic => { %>
+                            <div class="topic-tag"><%= topic %></div>
+                        <% }) %>
+                    <% } else { %>
+                        <p>You haven't selected any favorite topics yet.</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="recent-books-section">
+        <h3>Recently Viewed Books</h3>
+        <div class="books-grid">
+            <% if (user.recentlyBooks.length > 0) { %>
+                <% user.recentlyBooks.forEach(function(book) { %>
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <% if (book.coverImage) { %>
+                                <img src="<%= book.coverImage %>" alt="<%= book.title %> cover" class="book-image">
+                            <% } else { %>
+                                <div class="book-placeholder">
+                                    <i>📚</i>
+                                    <div><%= book.title %></div>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="book-info">
+                            <div class="book-title"><%= book.title %></div>
+                            <div class="book-author"><%= book.author %></div>
+                            <div class="book-meta">
+                                <div class="book-category"><%= book.category %></div>
+                            </div>
+                            <div class="book-actions">
+                                <a href="<%= book.pdf %>" target="_blank" class="read-button">Read Book</a>
+                                <form action="/profile/recentlyBooks/<%= book.bookId %>?_method=DELETE" method="POST" class="delete-form">
+                                  <button type="submit" class="delete-button">Delete</button>
+                                </form>
+                              </div>
+                              
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="no-results">
+                    <div class="no-results-icon">📚</div>
+                    <div class="no-results-title">No recently viewed books yet</div>
+                    <div class="no-results-subtitle">Start exploring our library to see your recent books here</div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <footer id="footer">
+        <div class="content">
+          <div class="top">
+            <div class="logo-details">
+              <span class="logo_name">Esnad</span>
+            </div>
+            <div class="media-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://x.com/EsnadLib"><i class="fab fa-x"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.youtube.com/@esnadlib"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="link-boxes">
+            <ul class="box">
+                <img id="imggg" style="border-radius: 20px;" width="200px" src="/img/idk.jfif" alt="">
+            </ul>
+            <ul class="box">
+              <li class="link_name">Pages</li>
+              <li><a href="/index">Home</a></li>
+              <li><a href="#footer">Contact</a></li>
+              <li><a href="/profile">Profile</a></li>
+              <li><a href="/logout">Logout</a></li>
+            </ul>
+            <ul class="box">
+              <li class="link_name">Contact</li>
+              <li><a href="https://wa.link/e3ezdq">WhatsApp</a></li>
+              <li><a href="#">esnadlib@gmail.com</a></li>
+              <li><a href="#">Instgram</a></li>
+              <li><a href="#">FaceBook</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="bottom-details">
+          <div class="bottom_text">
+            <span class="copyright_text">Copyright © 2025 <a href="#">Esnad.</a>All rights reserved</span>
+            <span class="policy_terms">
+              <a href="#">Privacy policy</a>
+              <a href="#">Terms & condition</a>
+            </span>
+          </div>
+        </div>
+      </footer>
+      
+      <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+      </script>
+</body>
+</html>
