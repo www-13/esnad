@@ -1,5 +1,5 @@
 const express = require('express');
-const fetch = require('node-fetch');
+const fetch = (...args) => import('node-fetch').then(({ default: f }) => f(...args));
 const router = express.Router();
 const User = require('../models/customerSchema');
 const Book = require('../models/book');  // Adjust the path if needed
