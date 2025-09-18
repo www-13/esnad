@@ -1,4 +1,5 @@
 const express = require('express');
+const fetch = require('node-fetch');
 const router = express.Router();
 const User = require('../models/customerSchema');
 const Book = require('../models/book');  // Adjust the path if needed
@@ -305,6 +306,37 @@ router.get('/book/:id', isLoggedIn, async (req, res) => {
   } catch (err) {
     console.error('Error fetching book:', err);
     res.status(500).send('Server error');
+  }
+});
+
+router.get('/google-book/:id', isLoggedIn, async (req, res) => {
+  const bookId = req.params.id;
+  
+  try {
+    // Fetch book from Google Books API
+    const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${bookId}`);
+    
+    if (!response.ok) {
+      console.error('Google Books API error:', response.statusText);
+      return res.status(500).send('Error fetching books');
+    }
+
+    const googleBook = await response.json();
+    console.log(googleBook)
+
+    // Fetch logged-in user info for header
+    const user = await User.findById(req.session.userId).lean();
+
+    // Render the Google Books EJS page
+    res.render('googleBP', {
+      googleBook,
+      userName: user.name,
+      user
+    });
+
+  } catch (err) {
+    console.error('Error fetching Google Book:', err);
+    res.status(500).send('Server error fetching Book');
   }
 });
 
