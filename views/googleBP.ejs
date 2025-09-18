@@ -1,7 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title><%= googleBook.volumeInfo?.title || '?' %> - Esnad Library</title>
+    
+    <meta name="description" content="<%= googleBook.volumeInfo?.description || 'Read and download this book at Esnad Library for free.' %>">
+    <meta name="keywords" content="<%= (googleBook.volumeInfo?.title || '') + ', ' + (googleBook.volumeInfo?.authors?.join(', ') || '') + ', free books, download pdf, Esnad Library' %>">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="<%= googleBook.volumeInfo?.title || '?' %> - Esnad Library">
+    <meta property="og:description" content="<%= googleBook.volumeInfo?.description || 'Read and download this book for free at Esnad Library.' %>">
+    <meta property="og:image" content="<%= googleBook.volumeInfo?.imageLinks?.thumbnail || '/img/default-book-cover.jpg' %>">
+    <meta property="og:url" content="https://esnad.onrender.com/books/view/<%= googleBook.id %>">
+    <meta property="og:type" content="book">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= googleBook.volumeInfo?.title || '?' %> - Esnad Library">
+    <meta name="twitter:description" content="<%= googleBook.volumeInfo?.description || 'Free access to this book at Esnad Library.' %>">
+    <meta name="twitter:image" content="<%= googleBook.volumeInfo?.imageLinks?.thumbnail || '/img/default-book-cover.jpg' %>">
 
+    <link rel="stylesheet" href="/css/bookp.css">    
 </head>
 <body>
     <header class="header">
