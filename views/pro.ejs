@@ -346,8 +346,51 @@
             padding: 1rem;
           }
         }
+        .books-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+}
 
-        .add-book-form {
+.toggle-btn {
+  padding: 0.6rem 1.2rem;
+  background: var(--background-tertiary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.toggle-btn:hover {
+  background: var(--light-red);
+  color: var(--primary-red);
+}
+
+.toggle-btn.active {
+  background: var(--primary-red);
+  color: #fff;
+  border-color: var(--primary-red);
+}
+
+.load-more-btn {
+  display: block;
+  margin: 2rem auto;
+  padding: 0.8rem 1.5rem;
+  background: var(--primary-red);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.load-more-btn:hover {
+  background: var(--primary-red-hover);
+}
+
+.add-book-form {
   padding: 2rem;
   background: #ffffff; /* background-primary */
   border-radius: 12px; /* radius-md */
@@ -478,6 +521,16 @@
         /* I'm including the essential responsive styles above */
     </style>
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FH1GSEHCJG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FH1GSEHCJG');
+</script>
+
 </head>
 <body>
     <header class="header">
@@ -490,7 +543,7 @@
                 </div>
             </div>
             <nav class="header-nav">
-                <a style="color: #902f36 !important;" href="/index" class="nav-item">Home</a>
+                <a style="color: #902f36 !important;" href="/pro" class="nav-item">Home</a>
                 <a href="/profile" class="nav-item">Profile</a>
                 <a href="#footer" class="nav-item">Contact</a>
                 <a href="/pricing" class="nav-item">Pricing</a>
@@ -528,7 +581,6 @@
         <section class="search-hero">
             <h1 class="search-title">Digital Knowledge Hub</h1>
             <p class="search-subtitle">Discover, explore, and immerse yourself in our vast collection of digital books and resources</p>
-
             <div class="search-container">
                 <div class="search-box">
                     <input type="text" id="searchInput" class="search-input" placeholder="Search by title, author, or keyword..." />
@@ -552,7 +604,10 @@
                             <option value="comics">Comics</option>
                             <option value="esnad">By Esnad</option>
                         </select>
+                        
+                      
                     </div>
+                    
                     <button class="search-button" id="searchButton">
                         <i class="fas fa-search"></i>
                         Search
@@ -566,6 +621,16 @@
                 <h2 class="section-title">Featured Collection</h2>
                 <p class="section-subtitle">Curated selection of premium digital resources and bestselling titles</p>
             </div>
+
+            <div class="books-toggle">
+              <button id="showDownloaded" class="toggle-btn active">
+                <i class="fas fa-download"></i> Books By Users
+              </button>
+              <button id="showFree" class="toggle-btn">
+                <i class="fas fa-book-open"></i> Free Books
+              </button>
+            </div>
+                       
 
             <div class="books-grid" id="booksGrid">
                 <div class="loading">
@@ -660,7 +725,7 @@
             </ul>
             <ul class="box">
               <li class="link_name">Navigation</li>
-              <li><a href="/pro">Home</a></li>
+              <li><a href="/index">Home</a></li>
               <li><a href="#footer">Contact</a></li>
               <li><a href="/profile">Profile</a></li>
               <li><a href="/logout">Logout</a></li>
@@ -686,200 +751,255 @@
     </footer>
 
     <script>
-        let booksData = [];
-        let filteredBooks = [];
-
-        // Mobile menu functionality
-        function setupMobileMenu() {
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const mobileNav = document.getElementById('mobileNav');
-            
-            mobileMenuBtn.addEventListener('click', function() {
-                this.classList.toggle('active');
-                mobileNav.classList.toggle('active');
-            });
-            
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!mobileMenuBtn.contains(event.target) && !mobileNav.contains(event.target)) {
-                    mobileMenuBtn.classList.remove('active');
-                    mobileNav.classList.remove('active');
-                }
-            });
-            
-            // Close mobile menu when clicking on a link
-            const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
-            mobileNavItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    mobileMenuBtn.classList.remove('active');
-                    mobileNav.classList.remove('active');
-                });
-            });
+      // -----------------------------
+      // STATE
+      // -----------------------------
+      let booksData = [];
+      let filteredBooks = [];
+      let currentMode = "downloaded"; // "downloaded" or "free"
+    
+      // Google Books pagination
+      let freeBooksStartIndex = 0;
+      const freeBooksMaxResults = 40;
+      let freeBooksTotal = 0;
+      let currentGoogleQuery = "";
+    
+      // -----------------------------
+      // FETCH DOWNLOADED BOOKS
+      // -----------------------------
+      async function fetchDownloadedBooks() {
+        try {
+          const res = await fetch('/api/books');
+          if (!res.ok) throw new Error('Database fetch failed');
+          booksData = await res.json();
+          filteredBooks = booksData;
+          renderBooks();
+          hideLoadMore();
+        } catch(err) {
+          console.error('Error fetching downloaded books:', err);
+          showError("Unable to load downloaded books.");
         }
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+      }
+    
+      // -----------------------------
+      // FETCH FREE BOOKS (GOOGLE)
+      // -----------------------------
+      async function fetchFreeBooks(loadMore = false, categoryFilter = "all") {
+        try {
+          if (!loadMore) {
+            freeBooksStartIndex = 0;
+            booksData = [];
+          }
+          const query = currentGoogleQuery || "books";
+          let url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&startIndex=${freeBooksStartIndex}&maxResults=${freeBooksMaxResults}`;
+    
+          const res = await fetch(url);
+          if (!res.ok) throw new Error("Google API fetch failed");
+          const data = await res.json();
+    
+          freeBooksTotal = data.totalItems || 0;
+          let newBooks = (data.items || []).map(item => ({
+            title: item.volumeInfo.title,
+            author: item.volumeInfo.authors ? item.volumeInfo.authors.join(", ") : "Unknown",
+            category: item.volumeInfo.categories ? item.volumeInfo.categories[0] : "General",
+            image: item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : null,
+            _id: item.id,
+            googleLink: `https://books.google.com/books?id=${item.id}`
+          }));
+    
+          // Apply category filter
+          if (categoryFilter !== "all") {
+            newBooks = newBooks.filter(book => book.category.toLowerCase() === categoryFilter);
+          }
+    
+          booksData = booksData.concat(newBooks);
+          filteredBooks = booksData;
+          renderBooks();
+    
+          freeBooksStartIndex += freeBooksMaxResults;
+          showLoadMore(freeBooksStartIndex < freeBooksTotal);
+        } catch (err) {
+          console.error("Error fetching free books:", err);
+          showError("Unable to load free books.");
+        }
+      }
+    
+      // -----------------------------
+      // RENDER BOOKS GRID
+      // -----------------------------
+      function renderBooks() {
+        const grid = document.getElementById('booksGrid');
+        if (!filteredBooks.length) {
+          grid.innerHTML = `
+            <div class="no-results fade-in">
+              <div class="no-results-icon">📚</div>
+              <div class="no-results-title">No books found</div>
+              <p>Try adjusting your search criteria or browse all categories</p>
+            </div>
+          `;
+          return;
+        }
+    
+        grid.innerHTML = '';
+        filteredBooks.forEach((book, i) => {
+          const card = document.createElement('div');
+          card.className = 'book-card fade-in';
+          card.style.animationDelay = `${i * 0.05}s`;
+    
+          const bookLink = currentMode === "downloaded"
+            ? `/book/${book._id}`
+            : book.googleLink;
+    
+          card.innerHTML = `
+            <div class="book-cover">
+              ${book.image 
+                ? `<img src="${book.image}" alt="${book.title}" class="book-image">`
+                : `<div class="book-placeholder"><i class="fas fa-book"></i><span>${book.title.substring(0,30)}${book.title.length>30?'...':''}</span></div>`}
+            </div>
+            <div class="book-info">
+              <h3 class="book-title">${book.title}</h3>
+              <div class="book-author">${book.author || 'Unknown Author'}</div>
+              <div class="book-meta"><span class="book-category">${book.category || ''}</span></div>
+              <a href="${bookLink}" class="read-button" target="_blank">
+                <i class="fas fa-book-open"></i> Read Book
+              </a>
+            </div>
+          `;
+          grid.appendChild(card);
         });
-
-        // Fetch books from API
-        async function fetchBooksFromDatabase() {
-            try {
-                const response = await fetch('/api/books');
-                if (!response.ok) throw new Error('Network response was not ok');
-                booksData = await response.json();
-                filteredBooks = booksData;
-                renderBooks();
-            } catch (error) {
-                console.error('Failed to fetch books:', error);
-                document.getElementById('booksGrid').innerHTML = `
-                    <div class="no-results">
-                        <div class="no-results-icon">⚠️</div>
-                        <div class="no-results-title">Connection Error</div>
-                        <p>Unable to load books. Please check your connection and try again.</p>
-                    </div>
-                `;
-            }
+      }
+    
+      // -----------------------------
+      // SEARCH
+      // -----------------------------
+      function performSearch() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+        const selectedCategory = document.getElementById('categorySelect').value.toLowerCase();
+    
+        if (currentMode === "downloaded") {
+          filteredBooks = booksData.filter(book => {
+            const matchesSearch =
+              !searchTerm ||
+              (book.title && book.title.toLowerCase().includes(searchTerm)) ||
+              (book.author && book.author.toLowerCase().includes(searchTerm));
+            const matchesCategory =
+              selectedCategory === "all" ||
+              (book.category && book.category.toLowerCase() === selectedCategory);
+            return matchesSearch && matchesCategory;
+          });
+          renderBooks();
+        } else if (currentMode === "free") {
+          currentGoogleQuery = searchTerm || "books";
+          freeBooksStartIndex = 0;
+          booksData = [];
+          fetchFreeBooks(false, selectedCategory);
         }
-
-        // Render books grid with enhanced animations
-        function renderBooks() {
-            const booksGrid = document.getElementById('booksGrid');
-            
-            if (!filteredBooks.length) {
-                booksGrid.innerHTML = `
-                    <div class="no-results fade-in">
-                        <div class="no-results-icon">📚</div>
-                        <div class="no-results-title">No books found</div>
-                        <p>Try adjusting your search criteria or browse all categories</p>
-                    </div>
-                `;
-                return;
-            }
-
-            booksGrid.innerHTML = '';
-
-            filteredBooks.forEach((book, index) => {
-                const bookCard = document.createElement('div');
-                bookCard.className = 'book-card fade-in';
-                bookCard.style.animationDelay = `${index * 0.1}s`;
-                bookCard.innerHTML = `
-                    <div class="book-cover">
-                        ${book.image ? 
-                            `<img src="${book.image}" alt="${book.title}" class="book-image">` : 
-                            `<div class="book-placeholder">
-                                <i class="fas fa-book"></i>
-                                <span>${book.title.substring(0, 30)}${book.title.length > 30 ? '...' : ''}</span>
-                            </div>`
-                        }
-                    </div>
-                    <div class="book-info">
-                        <h3 class="book-title">${book.title}</h3>
-                        <div class="book-author">${book.author || 'Unknown Author'}</div>
-                        <div class="book-meta">
-                            <span class="book-category">${book.category}</span>
-                        </div>
-                        <a href="/book/${book._id}" class="read-button">
-                            <i class="fas fa-book-open"></i>
-                            Read Now
-                        </a>
-                    </div>
-                `;
-
-                booksGrid.appendChild(bookCard);
-            });
-        }
-
-        // Enhanced search functionality
-        function performSearch() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-            const selectedCategory = document.getElementById('categorySelect').value.toLowerCase();
-
-            // Show loading state during search
-            if (searchTerm || selectedCategory !== 'all') {
-                const booksGrid = document.getElementById('booksGrid');
-                booksGrid.innerHTML = `
-                    <div class="loading fade-in">
-                        <div class="loading-spinner"></div>
-                        <p>Searching library...</p>
-                    </div>
-                `;
-
-                // Simulate search delay for better UX
-                setTimeout(() => {
-                    filteredBooks = booksData.filter(book => {
-                        const matchesSearch = !searchTerm || 
-                            (book.title && book.title.toLowerCase().includes(searchTerm)) || 
-                            (book.author && book.author.toLowerCase().includes(searchTerm)) ||
-                            (book.description && book.description.toLowerCase().includes(searchTerm));
-
-                        const matchesCategory = selectedCategory === 'all' || 
-                            (book.category && book.category.toLowerCase() === selectedCategory);
-
-                        return matchesSearch && matchesCategory;
-                    });
-
-                    renderBooks();
-                }, 300);
-            } else {
-                filteredBooks = booksData;
-                renderBooks();
-            }
-        }
-
-        // Search input enhancements
-        function setupSearchEnhancements() {
-            const searchInput = document.getElementById('searchInput');
-            const searchButton = document.getElementById('searchButton');
-            const categorySelect = document.getElementById('categorySelect');
-
-            // Real-time search with debouncing
-            let searchTimeout;
-            searchInput.addEventListener('input', () => {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(performSearch, 300);
-            });
-
-            // Enhanced search button interaction
-            searchButton.addEventListener('click', performSearch);
-            
-            // Category change handler
-            categorySelect.addEventListener('change', performSearch);
-
-            // Enter key search
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    performSearch();
-                }
-            });
-        }
-
-        // Enhanced initialization
-        document.addEventListener('DOMContentLoaded', () => {
-            setupMobileMenu(); // Add this line
-            fetchBooksFromDatabase();
-            setupSearchEnhancements();
-
-            // Add smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
+      }
+    
+      function setupSearch(){
+        const input = document.getElementById('searchInput');
+        const btn = document.getElementById('searchButton');
+        const cat = document.getElementById('categorySelect');
+        let timeout;
+    
+        input.addEventListener('input', () => {
+          clearTimeout(timeout);
+          timeout = setTimeout(performSearch, 300);
         });
+        btn.addEventListener('click', performSearch);
+        cat.addEventListener('change', performSearch);
+        input.addEventListener('keypress', e => {
+          if(e.key === "Enter") performSearch();
+        });
+      }
+    
+      // -----------------------------
+      // TOGGLE BUTTONS
+      // -----------------------------
+      function setupToggle(){
+        const btnDownloaded = document.getElementById("showDownloaded");
+        const btnFree = document.getElementById("showFree");
+    
+        btnDownloaded.addEventListener("click", ()=>{
+          btnDownloaded.classList.add("active");
+          btnFree.classList.remove("active");
+          currentMode = "downloaded";
+          fetchDownloadedBooks();
+        });
+    
+        btnFree.addEventListener("click", ()=>{
+          btnFree.classList.add("active");
+          btnDownloaded.classList.remove("active");
+          currentMode = "free";
+          freeBooksStartIndex = 0;
+          fetchFreeBooks();
+        });
+      }
+    
+      // -----------------------------
+      // LOAD MORE BUTTON
+      // -----------------------------
+      function showLoadMore(show){
+        let btn = document.getElementById("loadMoreBtn");
+        if(!btn){
+          btn = document.createElement("button");
+          btn.id = "loadMoreBtn";
+          btn.className = "load-more-btn";
+          btn.innerText = "Load More Free Books";
+          btn.addEventListener("click", ()=>fetchFreeBooks(true));
+          document.getElementById("booksGrid").after(btn);
+        }
+        btn.style.display = show ? "block" : "none";
+      }
+    
+      function hideLoadMore(){
+        const btn = document.getElementById("loadMoreBtn");
+        if(btn) btn.style.display = "none";
+      }
+    
+      // -----------------------------
+      // MOBILE MENU
+      // -----------------------------
+      function setupMobileMenu(){
+        const btn = document.getElementById('mobileMenuBtn');
+        const nav = document.getElementById('mobileNav');
+        btn.addEventListener('click', ()=>{
+          btn.classList.toggle('active');
+          nav.classList.toggle('active');
+        });
+        document.addEventListener('click', e=>{
+          if(!btn.contains(e.target) && !nav.contains(e.target)){
+            btn.classList.remove('active');
+            nav.classList.remove('active');
+          }
+        });
+        document.querySelectorAll('.mobile-nav-item').forEach(i=>{
+          i.addEventListener('click', ()=>{
+            btn.classList.remove('active');
+            nav.classList.remove('active');
+          });
+        });
+      }
+    
+      // -----------------------------
+      // INIT
+      // -----------------------------
+      document.addEventListener('DOMContentLoaded', ()=>{
+        setupMobileMenu();
+        setupSearch();
+        setupToggle();
+        fetchDownloadedBooks(); // default start
+      });
+    
+      // -----------------------------
+      // ERROR DISPLAY
+      // -----------------------------
+      function showError(msg){
+        const grid = document.getElementById('booksGrid');
+        grid.innerHTML = `<div class="no-results fade-in"><div class="no-results-icon">⚠️</div><div class="no-results-title">Error</div><p>${msg}</p></div>`;
+      }
     </script>
+
     
 </body> 
 </html>
