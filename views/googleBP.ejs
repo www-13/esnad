@@ -1,26 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title><%= googleBook.volumeInfo?.title || '?' %> - Esnad Library</title>
-    
-    <meta name="description" content="<%= googleBook.volumeInfo?.description || 'Read and download this book at Esnad Library for free.' %>">
-    <meta name="keywords" content="<%= (googleBook.volumeInfo?.title || '') + ', ' + (googleBook.volumeInfo?.authors?.join(', ') || '') + ', free books, download pdf, Esnad Library' %>">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="<%= googleBook.volumeInfo?.title || '?' %> - Esnad Library">
-    <meta property="og:description" content="<%= googleBook.volumeInfo?.description || 'Read and download this book for free at Esnad Library.' %>">
-    <meta property="og:image" content="<%= googleBook.volumeInfo?.imageLinks?.thumbnail || '/img/default-book-cover.jpg' %>">
-    <meta property="og:url" content="https://esnad.onrender.com/books/view/<%= googleBook.id %>">
-    <meta property="og:type" content="book">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<%= googleBook.volumeInfo?.title || '?' %> - Esnad Library">
-    <meta name="twitter:description" content="<%= googleBook.volumeInfo?.description || 'Free access to this book at Esnad Library.' %>">
-    <meta name="twitter:image" content="<%= googleBook.volumeInfo?.imageLinks?.thumbnail || '/img/default-book-cover.jpg' %>">
 
-    <link rel="stylesheet" href="/css/bookp.css">    
 </head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <img style="border-radius: 50%;" width="60px" src="/img/idk.jfif" alt="Esnad Logo">
+                </div>
+                <div class="brand-text">
+                    <div class="brand-name">Esnad</div>
+                    <div class="brand-subtitle">No Risk No Story!</div>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a style="color: #902f36 !important;" href="<%= (user && user.plan === 'free') ? '/index' : '/pro' %>" class="nav-item">Home</a>              
+                <a href="/profile" class="nav-item">Profile</a>
+                <a href="#" class="nav-item">Contact</a>
+                <a href="/pricing" class="nav-item">Pricing</a>
+                <a href="/login" class="nav-item">Login</a>
+            </nav>
+            <div class="user-profile">
+                <a href="/profile" style="text-decoration: none; color: #111;"><%= userName %></a>
+            </div>
+            <div class="hamburger" onclick="toggleMobileNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-content">
+                <div class="mobile-nav-items">
+                    <a href="/index" class="mobile-nav-item active">Home</a>
+                    <a href="/profile" class="mobile-nav-item">Profile</a>
+                    <a href="#footer" class="mobile-nav-item">Contact</a>
+                    <a href="/logout" class="mobile-nav-item">Logout</a>
+                    <a href="/login" class="mobile-nav-item">Login</a>
+                </div>
+                <div class="mobile-user-profile">
+                    <a href="/profile"><%= userName %></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="book-container">
+        <div class="book-content">
+            <div class="book-main">
+                <div class="book-poster">
+                    <img src="<%= googleBook.volumeInfo?.imageLinks?.thumbnail || '/img/default-book-cover.jpg' %>" alt="Book Cover">
+                </div>
+                
+                <div class="book-details">
+                    <div class="book-category"><%= googleBook.volumeInfo?.categories?.join(', ') || '?' %></div>
+                    
+                    <h1 class="book-title"><%= googleBook.volumeInfo?.title || '?' %></h1>
+                    
+                    <p class="book-author">by <%= googleBook.volumeInfo?.authors?.join(', ') || '?' %></p>
+                    
+                    <p class="book-description">
+                        <%= googleBook.volumeInfo?.description || '?' %>
+                    </p>
+
+                    <div class="book-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Pages</div>
+                            <div class="meta-value"><%= googleBook.volumeInfo?.pageCount || '?' %> pages</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Language</div>
+                            <div class="meta-value"><%= googleBook.volumeInfo?.language || '?' %></div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Publication</div>
+                            <div class="meta-value"><%= googleBook.volumeInfo?.publishedDate || '?' %></div>
+                        </div>
+                    </div>
+                    
+                    <div class="book-actions">
+                        <% if (googleBook.accessInfo?.pdf?.acsTokenLink) { %>
+                            <a href="<%= googleBook.accessInfo.pdf.acsTokenLink %>" target="_blank" class="btn btn-primary">📖 Read Book</a>
+                        <% } else { %>
+                            <a href="#" class="btn btn-primary disabled">📖 Read Book</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileNav() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
