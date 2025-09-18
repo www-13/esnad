@@ -659,9 +659,9 @@ router.get('/success', isLoggedIn, async (req, res) => {
     }
     
     // Hardcoded PayPal credentials (same as above)
-    const PAYPAL_CLIENT_ID = 'AeHaUBXjqM8Z5zKTZ5vQzjX5cXrY8eQ5tN5wQ5vQ5tN5wQ5vQ5tN5wQ5vQ5tN5w';
-    const PAYPAL_CLIENT_SECRET = 'EGnHDxD_qRPdaLdHCKiYSKRfQQjYyXcwQ5tN5wQ5vQ5tN5wQ5vQ5tN5wQ5vQ5t';
-    const PAYPAL_BASE_URL = 'https://api-m.sandbox.paypal.com';
+    const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID; // Replace with actual client ID
+    const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET; // Replace with actual client secret
+    const PAYPAL_BASE_URL = process.env.PAYPAL_BASE_URL; // Use sandbox for testing
     
     // Get PayPal access token
     const auth = Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`).toString('base64');
@@ -727,3 +727,4 @@ module.exports = router;
 /* 
 
 */
+
