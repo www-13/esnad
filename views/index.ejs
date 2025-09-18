@@ -491,12 +491,6 @@
                             <option value="comics">Comics</option>
                             <option value="esnad">By Esnad</option>
                         </select>
-
-                        <select id="languageSelect">
-                          <option value="all">All Languages</option>
-                          <option value="ar">Arabic</option>
-                          <option value="en">English</option>
-                        </select>
                         
                       
                     </div>
@@ -517,7 +511,7 @@
 
             <div class="books-toggle">
               <button id="showDownloaded" class="toggle-btn active">
-                <i class="fas fa-download"></i> Downloaded Books
+                <i class="fas fa-download"></i> Books By Users
               </button>
               <button id="showFree" class="toggle-btn">
                 <i class="fas fa-book-open"></i> Free Books
@@ -603,8 +597,7 @@
       let booksData = [];
       let filteredBooks = [];
       let currentMode = "downloaded"; // "downloaded" or "free"
-      let currentLanguage = "all";
-      
+    
       // Google Books pagination
       let freeBooksStartIndex = 0;
       const freeBooksMaxResults = 40;
@@ -631,155 +624,134 @@
       // -----------------------------
       // FETCH FREE BOOKS (GOOGLE)
       // -----------------------------
-      async function fetchFreeBooks(language = "all", loadMore=false) {
-  try {
-    if(!loadMore){
-      freeBooksStartIndex = 0;
-      booksData = [];
-    }
-    const query = currentGoogleQuery || "books";
-    let url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&startIndex=${freeBooksStartIndex}&maxResults=${freeBooksMaxResults}`;
+      async function fetchFreeBooks(loadMore = false, categoryFilter = "all") {
+        try {
+          if (!loadMore) {
+            freeBooksStartIndex = 0;
+            booksData = [];
+          }
+          const query = currentGoogleQuery || "books";
+          let url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&startIndex=${freeBooksStartIndex}&maxResults=${freeBooksMaxResults}`;
     
-    if(language !== "all") {
-      url += `&langRestrict=${language}`; // Google Books API supports 'langRestrict'
-    }
-
-    const res = await fetch(url);
-    if(!res.ok) throw new Error("Google API fetch failed");
-    const data = await res.json();
-
-    freeBooksTotal = data.totalItems || 0;
-    const newBooks = (data.items || []).map(item => ({
-      title: item.volumeInfo.title,
-      author: item.volumeInfo.authors ? item.volumeInfo.authors.join(", ") : "Unknown",
-      category: item.volumeInfo.categories ? item.volumeInfo.categories[0] : "General",
-      image: item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : null,
-      _id: item.id,
-      googleLink: `https://books.google.com/books?id=${item.id}`
-    }));
-
-    booksData = booksData.concat(newBooks);
-    filteredBooks = booksData;
-    renderBooks();
-
-    freeBooksStartIndex += freeBooksMaxResults;
-    showLoadMore(freeBooksStartIndex < freeBooksTotal);
-  } catch(err){
-    console.error('Error fetching free books:', err);
-    showError("Unable to load free books.");
-  }
-}
-
-
-
-
+          const res = await fetch(url);
+          if (!res.ok) throw new Error("Google API fetch failed");
+          const data = await res.json();
+    
+          freeBooksTotal = data.totalItems || 0;
+          let newBooks = (data.items || []).map(item => ({
+            title: item.volumeInfo.title,
+            author: item.volumeInfo.authors ? item.volumeInfo.authors.join(", ") : "Unknown",
+            category: item.volumeInfo.categories ? item.volumeInfo.categories[0] : "General",
+            image: item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : null,
+            _id: item.id,
+            googleLink: `https://books.google.com/books?id=${item.id}`
+          }));
+    
+          // Apply category filter
+          if (categoryFilter !== "all") {
+            newBooks = newBooks.filter(book => book.category.toLowerCase() === categoryFilter);
+          }
+    
+          booksData = booksData.concat(newBooks);
+          filteredBooks = booksData;
+          renderBooks();
+    
+          freeBooksStartIndex += freeBooksMaxResults;
+          showLoadMore(freeBooksStartIndex < freeBooksTotal);
+        } catch (err) {
+          console.error("Error fetching free books:", err);
+          showError("Unable to load free books.");
+        }
+      }
     
       // -----------------------------
       // RENDER BOOKS GRID
       // -----------------------------
       function renderBooks() {
-  const grid = document.getElementById('booksGrid');
-  if (!filteredBooks.length) {
-    grid.innerHTML = `
-      <div class="no-results fade-in">
-        <div class="no-results-icon">📚</div>
-        <div class="no-results-title">No books found</div>
-        <p>Try adjusting your search criteria or browse all categories</p>
-      </div>
-    `;
-    return;
-  }
-
-  grid.innerHTML = '';
-  filteredBooks.forEach((book, i) => {
-    const card = document.createElement('div');
-    card.className = 'book-card fade-in';
-    card.style.animationDelay = `${i * 0.05}s`;
-
-    // Determine correct link based on current mode
-    const bookLink = currentMode === "downloaded"
-      ? `/book/${book._id}`
-      : `/google-book/${book._id}`; // Google book uses same _id from API
-
-    card.innerHTML = `
-      <div class="book-cover">
-        ${book.image 
-          ? `<img src="${book.image}" alt="${book.title}" class="book-image">`
-          : `<div class="book-placeholder"><i class="fas fa-book"></i><span>${book.title.substring(0,30)}${book.title.length>30?'...':''}</span></div>`}
-      </div>
-      <div class="book-info">
-        <h3 class="book-title">${book.title}</h3>
-        <div class="book-author">${book.author || 'Unknown Author'}</div>
-        <div class="book-meta"><span class="book-category">${book.category || ''}</span></div>
-        <a href="${bookLink}" class="read-button">
-          <i class="fas fa-book-open"></i> Read Book
-        </a>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-}
-
+        const grid = document.getElementById('booksGrid');
+        if (!filteredBooks.length) {
+          grid.innerHTML = `
+            <div class="no-results fade-in">
+              <div class="no-results-icon">📚</div>
+              <div class="no-results-title">No books found</div>
+              <p>Try adjusting your search criteria or browse all categories</p>
+            </div>
+          `;
+          return;
+        }
+    
+        grid.innerHTML = '';
+        filteredBooks.forEach((book, i) => {
+          const card = document.createElement('div');
+          card.className = 'book-card fade-in';
+          card.style.animationDelay = `${i * 0.05}s`;
+    
+          const bookLink = currentMode === "downloaded"
+            ? `/book/${book._id}`
+            : book.googleLink;
+    
+          card.innerHTML = `
+            <div class="book-cover">
+              ${book.image 
+                ? `<img src="${book.image}" alt="${book.title}" class="book-image">`
+                : `<div class="book-placeholder"><i class="fas fa-book"></i><span>${book.title.substring(0,30)}${book.title.length>30?'...':''}</span></div>`}
+            </div>
+            <div class="book-info">
+              <h3 class="book-title">${book.title}</h3>
+              <div class="book-author">${book.author || 'Unknown Author'}</div>
+              <div class="book-meta"><span class="book-category">${book.category || ''}</span></div>
+              <a href="${bookLink}" class="read-button" target="_blank">
+                <i class="fas fa-book-open"></i> Read Book
+              </a>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
     
       // -----------------------------
       // SEARCH
       // -----------------------------
-      function performSearch(){
-  const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-  const selectedCategory = document.getElementById('categorySelect').value.toLowerCase();
-  const selectedLanguage = document.getElementById('languageSelect').value; // new
-
-  if(currentMode==="downloaded"){
-    // Existing local filtering
-    if(searchTerm || selectedCategory!=="all"){
-      filteredBooks = booksData.filter(book => {
-        const matchesSearch = !searchTerm || (book.title && book.title.toLowerCase().includes(searchTerm)) || (book.author && book.author.toLowerCase().includes(searchTerm));
-        const matchesCategory = selectedCategory==="all" || (book.category && book.category.toLowerCase()===selectedCategory);
-        return matchesSearch && matchesCategory;
-      });
-    } else {
-      filteredBooks = booksData;
-    }
-    renderBooks();
-  } else if(currentMode==="free"){
-    currentGoogleQuery = searchTerm || "books";
-    freeBooksStartIndex = 0;
-    booksData = [];
-    fetchFreeBooks(selectedLanguage); // pass language to fetch function
-  }
-}
-
-
-
+      function performSearch() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+        const selectedCategory = document.getElementById('categorySelect').value.toLowerCase();
     
-function setupSearch(){
-    const input = document.getElementById('searchInput');
-    const btn = document.getElementById('searchButton');
-    const cat = document.getElementById('categorySelect');
-    const lang = document.getElementById('languageSelect'); // NEW: language filter
-    let timeout;
-
-    // Search on input with debounce
-    input.addEventListener('input', () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(performSearch, 300);
-    });
-
-    // Search on button click
-    btn.addEventListener('click', performSearch);
-
-    // Search on category change
-    cat.addEventListener('change', performSearch);
-
-    // Search on language change
-    lang.addEventListener('change', performSearch);
-
-    // Search on Enter key
-    input.addEventListener('keypress', e => {
-        if(e.key === "Enter") performSearch();
-    });
-}
-
+        if (currentMode === "downloaded") {
+          filteredBooks = booksData.filter(book => {
+            const matchesSearch =
+              !searchTerm ||
+              (book.title && book.title.toLowerCase().includes(searchTerm)) ||
+              (book.author && book.author.toLowerCase().includes(searchTerm));
+            const matchesCategory =
+              selectedCategory === "all" ||
+              (book.category && book.category.toLowerCase() === selectedCategory);
+            return matchesSearch && matchesCategory;
+          });
+          renderBooks();
+        } else if (currentMode === "free") {
+          currentGoogleQuery = searchTerm || "books";
+          freeBooksStartIndex = 0;
+          booksData = [];
+          fetchFreeBooks(false, selectedCategory);
+        }
+      }
+    
+      function setupSearch(){
+        const input = document.getElementById('searchInput');
+        const btn = document.getElementById('searchButton');
+        const cat = document.getElementById('categorySelect');
+        let timeout;
+    
+        input.addEventListener('input', () => {
+          clearTimeout(timeout);
+          timeout = setTimeout(performSearch, 300);
+        });
+        btn.addEventListener('click', performSearch);
+        cat.addEventListener('change', performSearch);
+        input.addEventListener('keypress', e => {
+          if(e.key === "Enter") performSearch();
+        });
+      }
     
       // -----------------------------
       // TOGGLE BUTTONS
@@ -866,7 +838,9 @@ function setupSearch(){
         const grid = document.getElementById('booksGrid');
         grid.innerHTML = `<div class="no-results fade-in"><div class="no-results-icon">⚠️</div><div class="no-results-title">Error</div><p>${msg}</p></div>`;
       }
-    </script>    
+    </script>
+    
+    
         
       
     <script src="https://fpyf8.com/88/tag.min.js" data-zone="162288" async data-cfasync="false"></script>
